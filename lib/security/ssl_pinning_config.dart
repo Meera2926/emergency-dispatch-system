@@ -1,0 +1,10 @@
+class SslPinningConfig {
+  static const List<String> trustedCertSha256Fingerprints = [
+    '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824',
+    '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4',
+  ];
+
+  static bool isShaPinned(String certSha) {
+    return trustedCertSha256Fingerprints.contains(certSha.toLowerCase());
+  }
+}
