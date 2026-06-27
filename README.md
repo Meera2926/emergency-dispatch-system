@@ -1,11 +1,11 @@
 # SafeCall SOS - Emergency Resource Dispatch System 🚨
 
 [![Flutter CI](https://github.com/Meera2926/emergency-dispatch-system/actions/workflows/flutter_ci.yml/badge.svg)](https://github.com/Meera2926/emergency-dispatch-system/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](CHANGELOG.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
-[![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)](https://dart.dev)
 
-A mission-critical Flutter mobile application designed to instantly connect citizens in distress with emergency first responders (medical, police, fire) via real-time GPS telemetry, nearest-neighbor dispatch heuristics, and interactive live tracking.
+A mission-critical Flutter mobile application designed to instantly connect citizens in distress with emergency first responders (medical, police, fire) via real-time GPS telemetry, nearest-neighbor dispatch heuristics, dynamic geofencing, and interactive live tracking.
 
 ---
 
@@ -14,13 +14,15 @@ A mission-critical Flutter mobile application designed to instantly connect citi
 - **🚨 SOS Hold-to-Trigger**: 3-second safety latch with CustomPainter glowing pulse ring to eliminate accidental triggers.
 - **📍 Real-time Tracking & Telemetry**: Live map interface with Zomato/Uber-style delivery tracking, route polyline decoding, and ETA countdown.
 - **⚡ Nearest Responder Dispatch Heuristic**: Automated allocation of nearest available ambulance, patrol car, or fire engine.
-- **📴 Offline Resilience & SMS Fallback**: Queued telemetry sync and automated SMS dispatch with exact GPS coordinates when offline.
-- **🌐 Multilingual Support**: Built-in support for English, Hindi (हिंदी), and Tamil (தமிழ்).
-- **🔋 Battery-Aware GPS Throttling**: Dynamic location polling frequencies to conserve device power during long-duration emergencies.
+- **🏥 Hospital Bed Capacity & Trauma Routing**: Dynamic hospital selector routing critical patients to nearest facility with available ICU beds.
+- **🛑 Hazard Geofencing**: 2D ray-casting polygon boundary warnings around active wildfire, gas leak, and flood disaster perimeters.
+- **🫀 First-Aid & 110 BPM CPR Metronome**: Interactive audio-visual chest compression pacer following AHA resuscitation guidelines.
+- **📴 Offline Resilience & SMS Fallback**: Encrypted SQLite local cache, queued telemetry sync, and automated SMS dispatch with exact GPS coordinates.
+- **🌐 Multilingual & Accessible**: Full English, Hindi (हिंदी), and Tamil (தமிழ்) localization, TalkBack semantics, and high-contrast dark theme.
 
 ---
 
-## 📱 Architecture & Flow
+## 📱 Architecture & Data Flow
 
 ```mermaid
 sequenceDiagram
@@ -28,6 +30,7 @@ sequenceDiagram
     actor Victim as Citizen (App)
     participant Dispatcher as Dispatch Engine
     actor Responder as Emergency Unit
+    participant Hospital as Trauma Center
     
     Victim->>Victim: Hold SOS for 3 seconds
     Victim->>Dispatcher: POST /api/v1/emergency/trigger (GPS Coordinates)
@@ -39,6 +42,7 @@ sequenceDiagram
         Responder->>Dispatcher: Live GPS telemetry update
         Dispatcher->>Victim: Update marker & route polyline
     end
+    Dispatcher->>Hospital: Reserve ICU bed for incoming patient
     Responder->>Victim: Arrival on scene & incident resolution
 ```
 
@@ -62,12 +66,15 @@ flutter run
 
 ---
 
-## 📚 Documentation
+## 📚 Technical Documentation
 - [System Architecture](docs/ARCHITECTURE.md)
 - [REST API Specification](docs/API_SPECIFICATION.md)
 - [Dispatch Algorithm & Heuristics](docs/DISPATCH_ALGORITHM.md)
-- [Setup & Configuration Guide](docs/SETUP_GUIDE.md)
-- [Testing Strategy](docs/TESTING_STRATEGY.md)
+- [Local Storage & SQLite Schema](docs/DATABASE_SCHEMA.md)
+- [Geofencing & START Triage](docs/GEOFENCING_AND_TRIAGE.md)
+- [Performance Benchmarks](docs/PERFORMANCE_BENCHMARKS.md)
+- [Security Audit & Threat Model](docs/SECURITY_AUDIT.md)
+- [Release Changelog](CHANGELOG.md)
 
 ---
 
